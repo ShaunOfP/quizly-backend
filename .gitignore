@@ -1,0 +1,7 @@
+*sqlite3
+__pycache__
+.vscode
+superuser.txt
+env
+project.Quizly
+.env
