@@ -55,7 +55,7 @@ To use this project without the Frontend you need to have software like [Postman
 
 
 ## Authentication
-Note: The Project uses JWT (JSON Web Token) for the authentication
+Note: The Project uses [JWT](https://github.com/jazzband/djangorestframework-simplejwt) (JSON Web Token) for the authentication
 
 ### Registration
 Register your user.
