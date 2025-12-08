@@ -51,7 +51,16 @@ All needed dependencies are provided in a requirements.txt within the project. U
 pip install -r requirements.txt
 ```
 
-After installing the dependencies you can now start the backend:
+Then you need to generate the database:
+```bash
+#Creates the data structures and models
+python manage.py makemigrations
+
+#Creates the database using the data and models generated previously
+python manage.py migrate
+```
+
+After installing the dependencies and creating your database you can now start the backend:
 ```bash
 #Windows & Unix
 python manage.py runserver
