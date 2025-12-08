@@ -10,6 +10,7 @@ Clone the repository to your computer via git bash.
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY Path-of-the-Project
+cd quizly-backend
 ```
 A detailed guide to cloning a repository can be found [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
