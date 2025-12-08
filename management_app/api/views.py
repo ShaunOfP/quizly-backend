@@ -83,18 +83,18 @@ class CreateQuizView(CreateAPIView):
         cleaned_response = cleaned_response.strip()
         gemini_reponse_json = json.loads(cleaned_response)
 
-        quiz_question = QuizQuestion.objects.create(
-            question_title=gemini_reponse_json["question"],
-            question_options=gemini_reponse_json["answers"],
-            answer=gemini_reponse_json["correct_answer"]
-        )
-
         quiz = Quiz.objects.create(
             title=gemini_reponse_json["title"],
             description=gemini_reponse_json["description"],
             video_url=url,
-            questions=quiz_question,
             user=request.user
+        )
+
+        quiz_question = QuizQuestion.objects.create(
+            quiz=quiz,
+            question_title=gemini_reponse_json["question"],
+            question_options=gemini_reponse_json["answers"],
+            answer=gemini_reponse_json["correct_answer"]
         )
 
         os.remove(tmp_audiofile)
@@ -102,7 +102,7 @@ class CreateQuizView(CreateAPIView):
 
         serializer = QuizSerializer(quiz)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class QuizListView(ListAPIView):

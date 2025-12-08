@@ -12,7 +12,7 @@ class QuizQuestionSerializer(serializers.ModelSerializer):
 
 
 class QuizSerializer(serializers.ModelSerializer):
-    questions = serializers.SerializerMethodField()
+    questions = QuizQuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Quiz

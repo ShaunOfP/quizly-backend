@@ -8,6 +8,7 @@ class QuizQuestion(models.Model):
     answer = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    quiz = models.ForeignKey('Quiz', on_delete=models.CASCADE, related_name='questions')
 
 
 class Quiz(models.Model):
@@ -16,5 +17,4 @@ class Quiz(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     video_url = models.URLField()
-    questions = models.OneToOneField(QuizQuestion, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quizzes')
