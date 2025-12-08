@@ -3,6 +3,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from django.conf import settings
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -48,7 +49,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
             key="access_token",
             value=tokens["access"],
             httponly=True,
-            secure=True,
+            secure=settings.SECURE_COOKIES,
             samesite='Lax',
         )
 
@@ -56,7 +57,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
             key="refresh_token",
             value=tokens["refresh"],
             httponly=True,
-            secure=True,
+            secure=settings.SECURE_COOKIES,
             samesite='Lax',
         )
 
