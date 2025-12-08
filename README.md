@@ -37,7 +37,13 @@ To use the project you need three things:
 
 1. [yt-dlp](https://github.com/yt-dlp/yt-dlp): This technology is used to exctract and download the audio (.mp3) file from the provided Youtube-Video.
 2. [whisper](https://github.com/openai/whisper): Developed by OpenAI, this tool creates a transcript of the extracted audio file.
-3. [gemini](https://ai.google.dev/gemini-api/docs): Googles API is used to create the quiz from the provided transcript. To use Gemini you need to provide an API-Key, which can be generated on the given website. After you generated your API-Key you need to add a .env file to the root directory of the project and enter the key in this format: MY_API_KEY=your_api_key
+3. [gemini](https://ai.google.dev/gemini-api/docs): Googles API is used to create the quiz from the provided transcript. To use Gemini you need to provide an API-Key, which can be generated on the given website. 
+
+After you generated your API-Key, open a Terminal which runs the bash-console and enter the following command:
+```bash
+cp .env.template .env
+```
+This will generate the .env-file, where you **must** enter your API Key.
 
 All needed dependencies are provided in a requirements.txt within the project. Use the package manager [pip](https://pypi.org/project/pip/#files) to install the dependencies.
 
