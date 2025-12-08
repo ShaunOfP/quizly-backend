@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .serializers import RegistrationSerializer
+from .permissions import AuthenticatedViaRefreshToken
 
 
 class RegistrationView(CreateAPIView):
@@ -88,7 +89,7 @@ class LogoutView(APIView):
 
 
 class CookieTokenRefreshView(TokenRefreshView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AuthenticatedViaRefreshToken]
 
     def post(self, request, *args, **kwargs):
         """
