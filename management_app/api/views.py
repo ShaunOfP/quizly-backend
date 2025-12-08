@@ -1,20 +1,18 @@
-import yt_dlp
 import tempfile
 import os
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
-
-from management_app.models import QuizQuestion, Quiz
-
 from django.conf import settings
 
+from management_app.models import QuizQuestion, Quiz
 from .serializers import QuizSerializer
 import whisper
 from google import genai
 import json
 import re
+import yt_dlp
 
 
 class CreateQuizView(CreateAPIView):
@@ -22,6 +20,11 @@ class CreateQuizView(CreateAPIView):
     serializer_class = QuizSerializer
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates a Quiz from a YouTube video URL by downloading the audio, transcribing it,
+        generating quiz content using Gemini API, and saving it to the database.
+        """
+
         url = request.data.get('url')
         if not url:
             return Response({'detail': 'Ungültige URL oder Anfragedaten'}, status=status.HTTP_400_BAD_REQUEST)
@@ -113,4 +116,7 @@ class QuizDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = QuizSerializer
 
     def get_queryset(self):
+        """
+        Returns quizzes belonging to the authenticated user.
+        """
         return Quiz.objects.filter(user=self.request.user)

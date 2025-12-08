@@ -13,6 +13,9 @@ class RegistrationView(CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        """
+        Registers a new user with the provided data.
+        """
         serializer = RegistrationSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -29,6 +32,9 @@ class CookieTokenObtainPairView(TokenObtainPairView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
+        """
+        Authenticates the user and sets the access and refresh tokens in HttpOnly cookies.
+        """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -66,7 +72,12 @@ class CookieTokenObtainPairView(TokenObtainPairView):
 
 
 class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
+        """
+        Logs out the user by deleting the access and refresh tokens stored in cookies.
+        """
         response = Response(
             {"detail": "Log-Out successfully! All Tokens will be deleted. Refresh token is now invalid."},
             status=status.HTTP_200_OK
@@ -77,7 +88,12 @@ class LogoutView(APIView):
 
 
 class CookieTokenRefreshView(TokenRefreshView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
+        """
+        Refreshes the access token using the refresh token stored in cookies.
+        """
         refresh_token = request.COOKIES.get('refresh_token')
         if refresh_token is None:
             return Response(

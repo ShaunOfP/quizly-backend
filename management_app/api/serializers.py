@@ -18,8 +18,14 @@ class QuizSerializer(serializers.ModelSerializer):
         model = Quiz
         fields = ['id', 'title', 'description', 'created_at',
                   'updated_at', 'video_url', 'questions']
+        read_only_fields = ['id', 'created_at',
+                            'updated_at', 'questions', 'video_url']
 
     def get_questions(self, obj):
+        """
+        If the Quiz has a related QuizQuestion, it serializes that question
+        and wraps it in a list. If no question is associated, returns an empty list.
+        """
         if obj.questions:
             return [QuizQuestionSerializer(obj.questions).data]
         return []
