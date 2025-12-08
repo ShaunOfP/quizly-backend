@@ -33,7 +33,7 @@ class QuizTests(APITestCase):
             'url': 'https://www.youtube.com/watch?v=PPzIWFJU_3s'
         }
         response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
 
     def test_get_quizzes(self):
         url = reverse('quiz_list')
