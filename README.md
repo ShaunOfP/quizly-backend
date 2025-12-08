@@ -164,7 +164,7 @@ Request-body: not needed
 ### Managing quizzes
 Here you can get infos about a specific quiz, update existing ones or delete a quiz completely.
 
-#### Inspecting a specific quiz
+#### 1. Inspecting a specific quiz
 Endpoint: localhost/api/quizzes/{id}/
 
 HTTP-Method: GET
@@ -173,7 +173,7 @@ Permissions: You need to be authenticated to use this endpoint. You will only se
 
 Request-body: not needed
 
-#### Updating an existing quiz
+#### 2. Updating an existing quiz
 Endpoint: localhost/api/quizzes/{id}/
 
 HTTP-Method: PATCH
@@ -187,7 +187,7 @@ Request-body:
 }
 ```
 
-#### Deleting a quiz
+#### 3. Deleting a quiz
 **IMPORTANT**: Deleting a quiz is permanent and can't be undone.
 
 Endpoint: localhost/api/quizzes/{id}/
