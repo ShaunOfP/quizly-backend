@@ -26,12 +26,12 @@ python -m venv env
 Then start a virtual environment:
 ```bash
 #Windows
-.\env\Scripts\Activate
+env\Scripts\Activate
 ```
 
 ```bash
 #Unix
-source .env/bin/activate
+source env/bin/activate
 ```
 
 To use the project you need three things:
