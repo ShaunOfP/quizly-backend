@@ -63,6 +63,7 @@ def cleanup_temp_files(*file_paths):
             pass
 
 
+# region Prepare Quiz Generation
 def download_audio_from_video(url: str, tmp_audiofile: str):
     """
     Downloads audio from a YouTube video URL and saves it as an MP3 file.
@@ -99,6 +100,9 @@ def generate_transcript(tmp_audiofile: str):
     except Exception as e:
         cleanup_temp_files(tmp_audiofile)
         raise RuntimeError(f'Error transcribing audio: {str(e)}')
+# endregion
+
+# region Quiz generation and Response Formatting
 
 
 def get_ai_response(transcript: str):
@@ -141,3 +145,4 @@ def clean_ai_response(gemini_response):
     cleaned_response = cleaned_response.strip()
     gemini_reponse_json = json.loads(cleaned_response)
     return gemini_reponse_json
+# endregion
