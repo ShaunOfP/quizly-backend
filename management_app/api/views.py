@@ -4,7 +4,7 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView, C
 from rest_framework.permissions import IsAuthenticated
 
 from management_app.models import Quiz
-from management_app.utils.quiz_creator import create_quiz_from_url
+from management_app.utils.youtube_quiz_creator import create_quiz_from_url
 from .serializers import QuizSerializer
 
 

@@ -38,12 +38,13 @@ def create_quiz_from_url(url: str, user):
         user=user
     )
 
-    QuizQuestion.objects.create(
-        quiz=quiz,
-        question_title=gemini_response_json["question"],
-        question_options=gemini_response_json["answers"],
-        answer=gemini_response_json["correct_answer"]
-    )
+    for item in gemini_response_json['questions']:
+        QuizQuestion.objects.create(
+            quiz=quiz,
+            question_title=item["question_title"],
+            question_options=item["question_options"],
+            answer=item["answer"]
+        )
 
     cleanup_temp_files(tmp_audiofile)
 
@@ -107,12 +108,26 @@ def get_ai_response(transcript: str):
     client = genai.Client(api_key=settings.MY_API_KEY)
     gemini_response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents="You will receive a transcript of a YouTube video. Using the content of this transcript, generate a quiz in the following structure:\n"
-        "\n1. Create a title for the quiz.\n2. Create a description for the quiz.\n3. Generate one question directly based on the transcript.\n"
-        "4. Generate four answer options, where exactly one is correct and the other three are incorrect but plausible.\n"
-        "5. Save the correct answer separately in the field 'correct_answer'.\n"
-        "\nYour answer must strictly follow this JSON structure:\n{\n  \"title\": \"generated title\",\n  \"description\": \"generated description\",\n  \"question\": \"generated question\",\n  \"answers\": [\"answer a\", \"answer b\", \"answer c\", \"answer d\"],\n  \"correct_answer\": \"The correct answer from 'answers'\"\n}\n\n"
-        "Only use information from the transcript and do not add anything unrelated. Make the question clear and specific.\n\nTranscript:\n" + transcript
+        contents="Based on the following transcript, generate a quiz in valid JSON format.\n\n"
+        "The quiz must follow this exact structure:\n\n"
+        "{\n"
+        "  \"title\": \"Create a concise quiz title based on the topic of the transcript.\",\n"
+        "  \"description\": \"Summarize the transcript in no more than 150 characters. Do not include any quiz questions or answers.\",\n"
+        "  \"questions\": [\n"
+        "    {\n"
+        "      \"question_title\": \"The question goes here.\",\n"
+        "      \"question_options\": [\"Option A\", \"Option B\", \"Option C\", \"Option D\"],\n"
+        "      \"answer\": \"The correct answer from the above options\"\n"
+        "    },\n"
+        "    ... (exactly 10 questions)\n"
+        "  ]\n"
+        "}\n\n"
+        "Requirements:\n"
+        "- Each question must have exactly 4 distinct answer options.\n"
+        "- Only one correct answer is allowed per question, and it must be present in 'question_options'.\n"
+        "- The output must be valid JSON and parsable as-is (e.g., using Python's json.loads).\n"
+        "- Do not include explanations, comments, or any text outside the JSON.\n"
+        "Transcript:\n" + transcript
     )
     return gemini_response
 
